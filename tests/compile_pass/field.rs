@@ -14,6 +14,7 @@ graphql_schema! {
         optionUser: User
         users: [User!]!
         cursor: Cursor!
+        cursors: [Cursor!]!
     }
 
     type User {
@@ -34,6 +35,7 @@ pub struct Query {
     option_user: Option<User>,
     users: Vec<User>,
     cursor: Cursor,
+    cursors: Vec<Cursor>,
 }
 
 impl QueryFields for Query {
@@ -43,6 +45,7 @@ impl QueryFields for Query {
     field!(option_user -> Option<User>);
     field!(users -> Vec<User>);
     field!(cursor -> Cursor as scalar);
+    field!(cursors -> Vec<Cursor> as scalar);
 }
 
 pub struct Other {
