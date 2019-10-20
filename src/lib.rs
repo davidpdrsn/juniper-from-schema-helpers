@@ -13,10 +13,16 @@ macro_rules! or_return_compile_error {
 }
 
 mod field;
+mod loaded_association;
 
 #[proc_macro]
 pub fn field(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     field::expand(input)
+}
+
+#[proc_macro]
+pub fn loaded_association(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    loaded_association::expand(input)
 }
 
 fn inner_most_type_name(ty: &TypePath) -> Result<&Ident> {

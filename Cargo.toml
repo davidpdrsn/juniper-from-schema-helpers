@@ -13,6 +13,7 @@ proc-macro2 = "1"
 
 [dev_dependencies]
 juniper-from-schema = "0.4.0"
+juniper-eager-loading = "0.3"
 trybuild = "1.0.16"
 juniper = "0.14.0"
 

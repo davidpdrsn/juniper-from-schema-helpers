@@ -8,17 +8,17 @@ use syn::{
 };
 
 pub fn expand(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    let input = or_return_compile_error!(syn::parse::<FieldInput>(input));
+    let input = or_return_compile_error!(syn::parse::<Input>(input));
     or_return_compile_error!(input.expand()).into()
 }
 
-struct FieldInput {
+struct Input {
     key_path: Punctuated<Ident, Token![.]>,
     ty: TypePath,
     force_as_scalar: bool,
 }
 
-impl FieldInput {
+impl Input {
     fn expand(&self) -> Result<TokenStream> {
         if self.is_scalar()? || self.force_as_scalar {
             Ok(self.expand_to_scalar())
@@ -77,7 +77,7 @@ mod kw {
     syn::custom_keyword!(scalar);
 }
 
-impl Parse for FieldInput {
+impl Parse for Input {
     fn parse(input: ParseStream) -> syn::Result<Self> {
         let key_path = Punctuated::parse_separated_nonempty(input)?;
         input.parse::<Token![-]>()?;
@@ -92,7 +92,7 @@ impl Parse for FieldInput {
             false
         };
 
-        Ok(FieldInput {
+        Ok(Input {
             key_path,
             ty,
             force_as_scalar,
